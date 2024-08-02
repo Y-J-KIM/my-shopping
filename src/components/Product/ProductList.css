@@ -1,0 +1,27 @@
+.products {
+  padding: 20px;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-item {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  width: calc(33% - 20px);
+}
+
+.product-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-item h3 {
+  margin: 10px 0;
+}

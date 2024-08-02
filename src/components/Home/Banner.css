@@ -1,0 +1,9 @@
+.banner {
+  background: #f4f4f4;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.banner h1 {
+  margin: 0;
+}

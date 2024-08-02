@@ -1,0 +1,6 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 50px; /* 푸터 공간 확보 */
+}
