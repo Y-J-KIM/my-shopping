@@ -1,7 +1,7 @@
 // src/components/FileDelete.js
 
 import React from "react";
-import { deleteFile } from "../services/fileServices";
+import { deleteFile } from "../service/fileServices";
 
 const FileDelete = ({ fileName, onFileDeleted }) => {
   const handleDelete = async () => {

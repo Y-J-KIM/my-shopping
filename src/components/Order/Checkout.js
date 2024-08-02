@@ -1,7 +1,7 @@
 // src/components/Order/Checkout.js
 
 import React, { useEffect, useState } from "react";
-import { getCartForOrder, completeOrder } from "../../services/orderServices";
+import { getCartForOrder, completeOrder } from "../../service/orderServices";
 
 const Checkout = () => {
   const [cart, setCart] = useState(null);

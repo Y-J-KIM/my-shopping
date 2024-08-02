@@ -1,8 +1,8 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes} from "react-router-dom";
 import ProductPage from "../Product/ProductPage";
 import HomePage from "../Home/HomePage";
 
-const Routing = ({ user }) => {
+const Routing = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

@@ -1,7 +1,7 @@
 // src/components/FileUpload.js
 
 import React, { useState } from "react";
-import { uploadFiles } from "../services/fileServices";
+import { uploadFiles } from "../service/fileServices";
 
 const FileUpload = () => {
   const [files, setFiles] = useState([]);

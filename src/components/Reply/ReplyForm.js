@@ -1,7 +1,7 @@
 // src/components/Reply/ReplyForm.js
 
 import React, { useState, useEffect } from "react";
-import { addReply, updateReply } from "../../services/replyServices";
+import { addReply, updateReply } from "../../service/replyServices";
 
 const ReplyForm = ({ bno, replyToEdit, onReplyAddedOrUpdated }) => {
   const [comment, setComment] = useState("");

@@ -1,72 +1,41 @@
-// src/components/Product/ProductDetail.js
+// ProductDetail.js
 
-import React, { useEffect, useState } from "react";
-import { getProductById, addReview } from "../../services/productServices";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { fetchProductById } from '../../service/productServices';
 
-const ProductDetail = ({ match }) => {
+const ProductDetail = () => {
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState("");
-  const [review, setReview] = useState({ comment: "", rating: 5 });
 
   useEffect(() => {
-    const fetchProduct = async () => {
+    const getProduct = async () => {
       try {
-        const productData = await getProductById(match.params.id);
-        setProduct(productData);
-      } catch (err) {
-        setError("Failed to load product details.");
+        const response = await fetchProductById(id);
+        if (response.ok) {
+          const data = await response.json();
+          setProduct(data);
+        } else {
+          console.error('Failed to fetch product');
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
     };
 
-    fetchProduct();
-  }, [match.params.id]);
+    getProduct();
+  }, [id]);
 
-  const handleReviewChange = (e) => {
-    const { name, value } = e.target;
-    setReview((prevReview) => ({ ...prevReview, [name]: value }));
-  };
-
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    try {
-      await addReview(product.id, review.comment, review.rating);
-      setReview({ comment: "", rating: 5 });
-    } catch (err) {
-      setError("Failed to add review.");
-    }
-  };
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {product ? (
-        <div>
-          <h2>{product.name}</h2>
-          <p>{product.description}</p>
-          <p>${product.price}</p>
-          <h3>Reviews</h3>
-          {/* Render reviews here */}
-          <form onSubmit={handleSubmitReview}>
-            <textarea
-              name="comment"
-              value={review.comment}
-              onChange={handleReviewChange}
-              placeholder="Write a review..."
-            />
-            <input
-              type="number"
-              name="rating"
-              value={review.rating}
-              onChange={handleReviewChange}
-              min="1"
-              max="5"
-            />
-            <button type="submit">Add Review</button>
-          </form>
-        </div>
-      ) : (
-        <p>Loading product details...</p>
-      )}
+      <h2>{product.name}</h2>
+      <p>{product.description}</p>
+      <p>Price: ${product.price}</p>
+      <p>Stock: {product.stock}</p>
     </div>
   );
 };

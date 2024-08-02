@@ -1,7 +1,7 @@
 // src/components/FileViewer.js
 
 import React, { useEffect, useState } from "react";
-import { fetchFile } from "../services/fileServices";
+import { fetchFile } from "../service/fileServices";
 
 const FileViewer = ({ fileName }) => {
   const [fileUrl, setFileUrl] = useState(null);

@@ -1,7 +1,7 @@
 // src/components/Reply/ReplyList.js
 
 import React, { useEffect, useState } from "react";
-import { getReplies } from "../../services/replyServices";
+import { getReplies } from "../../service/replyServices";
 
 const ReplyList = ({ bno }) => {
   const [replies, setReplies] = useState([]);

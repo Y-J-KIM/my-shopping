@@ -1,7 +1,7 @@
 // src/components/Reply/ReplyDeleteButton.js
 
 import React from "react";
-import { deleteReply } from "../../services/replyServices";
+import { deleteReply } from "../../service/replyServices";
 
 const ReplyDeleteButton = ({ rno, onReplyDeleted }) => {
   const handleDelete = async () => {
