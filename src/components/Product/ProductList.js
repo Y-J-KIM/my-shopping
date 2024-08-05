@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchProducts } from "../../service/productServices";
-import ProductDetail from "./ProductDetail";
+
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
