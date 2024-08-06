@@ -1,6 +1,6 @@
 // src/services/fileServices.js
 
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 파일을 업로드합니다.

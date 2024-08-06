@@ -1,6 +1,6 @@
 // src/services/replyServices.js
 
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 댓글을 등록합니다.

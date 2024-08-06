@@ -1,6 +1,6 @@
 // src/services/homeServices.js
 
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 홈 페이지에서 사용자 정보를 가져옵니다.

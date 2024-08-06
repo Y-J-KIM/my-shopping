@@ -1,6 +1,6 @@
 // src/services/memberServices.js
 
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 회원 가입 요청
@@ -22,12 +22,12 @@ export const registerMember = async (memberData) => {
  * @param {Object} params - 요청 파라미터 (error, logout 등)
  * @returns {Promise} - API 응답
  */
-export const loginPage = async (params) => {
+export const login = async (credentials) => {
   try {
-    const response = await apiClient.get("/member/login", { params });
+    const response = await apiClient.post("/member/login", credentials);
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch login page:", error);
+    console.error("Login failed:", error);
     throw error;
   }
 };

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { registerMember } from "../../service/memberServices";
+import Header from "../Home/Header";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -32,41 +33,44 @@ const Register = () => {
 
   return (
     <div>
-      <h2>회원 가입</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">사용자 이름:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">비밀번호:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="email">이메일:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">회원 가입</button>
-        {error && <p>{error}</p>}
-      </form>
+      <Header />
+      <div>
+        <h2>회원 가입</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="username">사용자 이름:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">비밀번호:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">이메일:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <button type="submit">회원 가입</button>
+          {error && <p>{error}</p>}
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 장바구니에 상품을 추가합니다.

@@ -1,6 +1,6 @@
 // src/services/orderServices.js
 
-import apiClient from "../utils/apiClient";
+import apiClient from "../utils/api-client";
 
 /**
  * 장바구니를 조회하여 주문 페이지를 준비합니다.
