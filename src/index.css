@@ -1,1 +1,13 @@
+@font-face {
+  font-family: "SBAggroB";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
+body {
+  font-size: 16px;
+  background-color: #f6f8fa;
+  font-family: "SBAggroB" !important;
+}

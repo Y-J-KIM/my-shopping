@@ -1,0 +1,51 @@
+.board-register-page {
+  width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.board-register-page h1 {
+  text-align: center;
+}
+
+.board-register-page form {
+  display: flex;
+  flex-direction: column;
+}
+
+.board-register-page label {
+  margin-top: 10px;
+}
+
+.board-register-page input,
+.board-register-page textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.board-register-page button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board-register-page button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}

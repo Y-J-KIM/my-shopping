@@ -1,9 +1,11 @@
 // LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../service/memberServices"; // 로그인 요청을 처리하는 서비스 함수
+import { loginMember } from "../../service/memberServices"; // 로그인 요청을 처리하는 서비스 함수
 import "./Login.css";
 import Header from "../Home/Header";
+import { Link } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +13,7 @@ const LoginPage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +21,9 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await login({ email, password });
-      // 성공적으로 로그인 시 토큰 등을 저장하고 홈 페이지로 리다이렉트
-      localStorage.setItem("token", response.token); // 예를 들어, 응답에 토큰이 포함되어 있다고 가정
+      const response = await loginMember({ email, password });
+      // 로그인 성공 시 AuthContext의 login 함수 호출
+      login(response.data); // 예를 들어, 응답에 사용자 정보가 포함되어 있다고 가정
       navigate("/"); // 홈 페이지로 리다이렉트
     } catch (err) {
       setError("Invalid email or password");
@@ -55,9 +58,14 @@ const LoginPage = () => {
               required
             />
           </div>
-          <button type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
+          <div className="buttons">
+            <Link to="/member/join" className="join-text">
+              Join
+            </Link>
+            <button type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </div>
           {error && <div className="error">{error}</div>}
         </form>
       </div>

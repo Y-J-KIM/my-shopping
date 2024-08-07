@@ -1,0 +1,95 @@
+.board-detail-page .board-detail-container {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.board-detail-page h1 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.board-detail-page .board-info {
+  margin-bottom: 20px;
+}
+
+.board-detail-page .board-info-item {
+  margin-bottom: 10px;
+}
+
+.board-detail-page .board-content {
+  margin-bottom: 20px;
+}
+
+.board-detail-page .board-image {
+  margin-bottom: 20px;
+}
+
+.board-detail-page .board-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.board-detail-page .board-actions {
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.board-detail-page .btn {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.board-detail-page .btn-edit {
+  background-color: #4caf50;
+  color: white;
+  text-decoration: none;
+}
+
+.board-detail-page .btn-delete {
+  background-color: #f44336;
+  color: white;
+  text-decoration: none;
+}
+
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-form button:first-of-type {
+  background-color: #4caf50;
+  color: white;
+  margin-right: 10px;
+}
+
+.edit-form button:last-of-type {
+  background-color: #f44336;
+  color: white;
+}
+
+.board-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-button {
+  text-decoration: none;
+  color: #000000;
+}

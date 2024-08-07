@@ -1,0 +1,53 @@
+/* BoardList.css */
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.board-table th,
+.board-table td {
+  border: 1px solid #ddd;
+  padding: 12px; /* 패딩을 늘려서 넓게 만듭니다 */
+  text-align: left;
+}
+
+.board-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.board-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.board-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.board-table caption {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.board-title-link {
+  text-decoration: none !important; /* 링크의 밑줄 제거 */
+  color: #000000; /* 링크 색상 설정 (선택 사항) */
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.register-button {
+  padding: 10px;
+  background-color: #000000;
+  text-decoration: none;
+  color: #ffffff;
+}

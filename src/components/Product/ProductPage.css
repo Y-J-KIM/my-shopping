@@ -1,0 +1,14 @@
+/* ProductPage.css */
+.products_page {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+}
+
+.product-list {
+  flex-grow: 1; /* 남은 공간을 제품 리스트가 차지하도록 */
+  padding: 20px;
+}
