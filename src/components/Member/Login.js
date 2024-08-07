@@ -1,15 +1,14 @@
 // LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginMember } from "../../service/memberServices"; // 로그인 요청을 처리하는 서비스 함수
 import "./Login.css";
 import Header from "../Home/Header";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mid, setMid] = useState(""); // email을 mid로 변경
+  const [mpw, setMpw] = useState(""); // password를 mpw로 변경
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -21,17 +20,30 @@ const LoginPage = () => {
     setError(null);
 
     try {
-      const response = await loginMember({ email, password });
-      // 로그인 성공 시 AuthContext의 login 함수 호출
-      login(response.data); // 예를 들어, 응답에 사용자 정보가 포함되어 있다고 가정
-      navigate("/"); // 홈 페이지로 리다이렉트
+      const response = await fetch("/api/member/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          mid,
+          mpw,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Login failed");
+      }
+
+      // 로그인 성공 시 홈 페이지로 리다이렉트
+      navigate("/");
     } catch (err) {
-      setError("Invalid email or password");
+      setError("Invalid id or password");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div>
       <Header />
@@ -39,12 +51,12 @@ const LoginPage = () => {
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="mid">ID:</label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="mid"
+              value={mid}
+              onChange={(e) => setMid(e.target.value)}
               required
             />
           </div>
@@ -53,8 +65,8 @@ const LoginPage = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={mpw}
+              onChange={(e) => setMpw(e.target.value)}
               required
             />
           </div>
