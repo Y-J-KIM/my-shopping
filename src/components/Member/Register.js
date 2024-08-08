@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    id: "",
-    password: "",
+    mid: "",
+    mpw: "",
     name: "",
     email: "",
   });

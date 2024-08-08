@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Header.css";
 
-const Header = ({ cartCount }) => {
-  const { user, logout, loading } = useAuth(); // 로그인 상태와 로그아웃 함수 가져오기
+const Header = () => {
+  const { user, logout } = useAuth(); // 로그인 상태와 로그아웃 함수 가져오기
 
   return (
     <header>
@@ -36,8 +36,7 @@ const Header = ({ cartCount }) => {
               </li>
               <li>
                 <Link to="/cart" className="align_center">
-                  장바구니{" "}
-                  <p className="align_center cart_counts">{cartCount}</p>
+                  장바구니
                 </Link>
               </li>
               <li>
