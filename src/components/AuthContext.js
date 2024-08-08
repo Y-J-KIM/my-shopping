@@ -19,12 +19,11 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Login failed");
+        throw new Error("Login failed");
       }
 
-      const data = await response.text(); // 텍스트로 응답 처리
-      console.log("Login successful:", data);
+      const data = await response.json(); // 텍스트로 응답 처리
+      setUser(data.member);
     } catch (error) {
       console.error("Login error:", error);
     }
