@@ -40,7 +40,10 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                <button onClick={logout}>Logout</button>
+                {/* <button onClick={logout}>Logout</button> */}
+                <Link to="/member/logout" onClick={logout}>
+                  로그아웃
+                </Link>
               </li>
             </>
           )}

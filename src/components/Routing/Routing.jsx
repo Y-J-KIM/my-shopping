@@ -21,8 +21,8 @@ const Routing = () => {
       <Route path="/board/modify/:id" element={<BoardEditPage />} />
       <Route path="/member/join" element={<Register />} />
       <Route path="/member/login" element={<Login />} />
+      {/* <Route path="/logout" element={<Logout />} /> */}
       {/* <Route element={<ProtectedRoute user={user} />}>
-        <Route path="/logout" element={<Logout />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/myorders" element={<MyOrderPage />} />
       </Route> */}
