@@ -15,35 +15,53 @@ export function getJoinPage() {
   return apiClient.get("/member/join");
 }
 
-// 로그인 API 호출 함수
-export async function loginMember(credentials) {
-  let formData = new FormData();
-  console.log(credentials.mid, credentials.mpw);
-  formData.append("mid", credentials.mid);
-  formData.append("mpw", credentials.mpw);
-  //console.log(formData);
+// // 로그인 API 호출 함수
+// export async function loginMember(credentials) {
+//   let formData = new FormData();
+//   console.log(credentials.mid, credentials.mpw);
+//   formData.append("mid", credentials.mid);
+//   formData.append("mpw", credentials.mpw);
+//   //console.log(formData);
 
-  // return apiClient.post("/member/login", formData).then(
-  //   (response) => console.log(response)
-  //   //return apiClient.get("/member/loginOk"); // 로그인 후 사용자 정보를 가져옴
-  // );
-  // return axios({
-  //   method: "POST",
-  //   url: `http://localhost:8080/api/member/login?mid=${credentials.mid}&mpw=${credentials.mpw}`,
-  // }).then((response) => console.log(response));
+//   // return apiClient.post("/member/login", formData).then(
+//   //   (response) => console.log(response)
+//   //   //return apiClient.get("/member/loginOk"); // 로그인 후 사용자 정보를 가져옴
+//   // );
+//   // return axios({
+//   //   method: "POST",
+//   //   url: `http://localhost:8080/api/member/login?mid=${credentials.mid}&mpw=${credentials.mpw}`,
+//   // }).then((response) => console.log(response));
 
-  const response = await fetch(`http://localhost:8080/api/member/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData.toString(),
-    //body: new URLSearchParams(formData),
-  });
-  const result = await response.json();
+//   const response = await fetch(`http://localhost:8080/api/member/login`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: formData.toString(),
+//     //body: new URLSearchParams(formData),
+//   });
+//   const result = await response.json();
 
-  return result;
-}
+//   return result;
+// }
+
+/**
+ * 사용자 로그인
+ * @param {string} mid - 사용자 아이디
+ * @param {string} mpw - 사용자 비밀번호
+ * @returns {Promise<Object>}
+ */
+export const loginMember = async (mid, mpw) => {
+  try {
+    const response = await apiClient.post("/member/login", null, {
+      params: { mid, mpw },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to login:", error);
+    throw error;
+  }
+};
 
 export async function fetchUserInfo() {
   const token = localStorage.getItem("token");
