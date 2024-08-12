@@ -6,7 +6,7 @@ import { fetchProductById } from "../../service/productServices";
 import { addReview, getReviewsByProductId } from "../../service/reviewServices";
 import Header from "../Home/Header";
 import "./ProductDetail.css";
-import { fetchUserInfo } from "../../service/memberServices";
+import { checkLoginStatus } from "../../service/memberServices";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -23,7 +23,7 @@ const ProductDetail = () => {
         const data = await fetchProductById(id);
         setProduct(data);
 
-        const userInfo = await fetchUserInfo();
+        const userInfo = await checkLoginStatus();
         setUsername(userInfo.username);
 
         const reviewsData = await getReviewsByProductId(id);

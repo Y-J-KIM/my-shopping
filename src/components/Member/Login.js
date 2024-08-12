@@ -1,26 +1,26 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { login } from "../../service/memberServices";
+
 const Login = () => {
-  const [mid, setMid] = useState(""); // email을 mid로 변경
-  const [mpw, setMpw] = useState(""); // password를 mpw로 변경
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const [mid, setMid] = useState("");
+  const [mpw, setMpw] = useState("");
+  const [error, setError] = useState("");
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-
+    setError("");
     try {
       await login({ mid, mpw });
+      setUser(mid); // 사용자 정보를 AuthContext에 저장
+      navigate("/"); // 로그인 후 홈 페이지로 이동
     } catch (err) {
-      setError("Invalid id or password");
-    } finally {
-      setLoading(false);
+      setError(err.message); // 로그인 실패 시 에러 메시지 표시
     }
   };
 
@@ -29,7 +29,7 @@ const Login = () => {
       <Header />
       <div className="login-page">
         <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <div>
             <label htmlFor="mid">ID:</label>
             <input
@@ -44,7 +44,7 @@ const Login = () => {
             <label htmlFor="password">Password:</label>
             <input
               type="password"
-              id="password"
+              id="mpw"
               value={mpw}
               onChange={(e) => setMpw(e.target.value)}
               required
@@ -54,11 +54,9 @@ const Login = () => {
             <Link to="/member/join" className="join-text">
               Join
             </Link>
-            <button type="submit" disabled={loading}>
-              {loading ? "Logging in..." : "Login"}
-            </button>
+            <button type="submit">Login</button>
           </div>
-          {error && <div className="error">{error}</div>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </div>
     </div>
