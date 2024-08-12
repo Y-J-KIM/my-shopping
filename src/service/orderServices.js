@@ -8,7 +8,7 @@ import apiClient from "../utils/api-client";
  */
 export const getCartForOrder = async () => {
   try {
-    const response = await apiClient.get("/order");
+    const response = await apiClient.get("/myOrder");
     return response.data;
   } catch (error) {
     console.error("Failed to get cart for order:", error);

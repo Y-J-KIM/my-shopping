@@ -62,7 +62,7 @@ const BoardRegister = () => {
               id="writer"
               value={writer}
               onChange={(e) => setWriter(e.target.value)}
-              required
+              readOnly
             />
           </div>
           <div>

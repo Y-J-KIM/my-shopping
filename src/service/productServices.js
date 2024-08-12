@@ -16,7 +16,7 @@ export const fetchProducts = async () => {
 // 제품 세부 정보를 가져오는 함수
 export const fetchProductById = async (id) => {
   try {
-    const response = await apiClient.get(`/product/${id}`);
+    const response = await apiClient.get(`/products/${id}`);
     return response.data; // JSON 데이터를 반환합니다.
   } catch (error) {
     console.error(`Error fetching product with id ${id}:`, error);
