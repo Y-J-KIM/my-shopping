@@ -6,7 +6,8 @@ import { fetchProductById } from "../../service/productServices";
 import { addReview, getReviewsByProductId } from "../../service/reviewServices";
 import Header from "../Home/Header";
 import "./ProductDetail.css";
-import { checkLoginStatus } from "../../service/memberServices";
+import { getLoginStatus } from "../../service/memberServices";
+import memberService from "../../service/memberServices";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -18,13 +19,10 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadProductAndUserInfo = async () => {
+    const loadProduct = async () => {
       try {
         const data = await fetchProductById(id);
         setProduct(data);
-
-        const userInfo = await checkLoginStatus();
-        setUsername(userInfo.username);
 
         const reviewsData = await getReviewsByProductId(id);
         setReviews(reviewsData);
@@ -35,8 +33,8 @@ const ProductDetail = () => {
       }
     };
 
-    loadProductAndUserInfo();
-  }, [id]); // ID가 변경될 때마다 호출
+    loadProduct();
+  }, []);
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();

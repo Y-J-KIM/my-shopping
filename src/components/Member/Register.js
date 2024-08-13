@@ -5,6 +5,7 @@ import { register } from "../../service/memberServices";
 import "./Register.css";
 import Header from "../Home/Header";
 import { useNavigate } from "react-router-dom";
+import memberService from "../../service/memberServices";
 
 const Register = () => {
   const [mid, setMid] = useState("");
@@ -19,7 +20,7 @@ const Register = () => {
     setError("");
 
     try {
-      await register({ mid, mpw, name, email });
+      await memberService.register({ mid, mpw, name, email });
       navigate("/member/login"); // 회원가입 후 로그인 페이지로 이동
     } catch (err) {
       setError(err.message); // 회원가입 실패 시 에러 메시지 표시

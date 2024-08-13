@@ -1,57 +1,65 @@
 import axios from "axios";
 
-/**
- * 사용자 로그인
- * @param {Object} credentials - 로그인 정보
- * @returns {Promise<Object>} - 로그인 성공 시 사용자 정보
- */
-export const login = async (credentials) => {
+const API_URL = "http://localhost:8080/api/member";
+
+const register = async (memberData) => {
   try {
-    const response = await axios.post("/api/member/login", credentials);
+    const response = await axios.post(`${API_URL}/join`, memberData);
     return response.data;
   } catch (error) {
-    throw error.response ? error.response.data : new Error("Login failed");
+    console.error(
+      "Registration error:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
   }
 };
 
-/**
- * 사용자 회원가입
- * @param {Object} userData - 회원가입 정보
- * @returns {Promise<void>}
- */
-export const register = async (userData) => {
+const login = async (loginData) => {
   try {
-    await axios.post("/api/member/join", userData);
-  } catch (error) {
-    throw error.response
-      ? error.response.data
-      : new Error("Registration failed");
-  }
-};
-
-/**
- * 로그아웃
- * @returns {Promise<void>}
- */
-export const logout = async () => {
-  try {
-    await axios.post("/api/member/logout");
-  } catch (error) {
-    throw error.response ? error.response.data : new Error("Logout failed");
-  }
-};
-
-/**
- * 로그인 상태 확인
- * @returns {Promise<string>}
- */
-export const checkLoginStatus = async () => {
-  try {
-    const response = await axios.get("/api/member/loginStatus");
+    const response = await axios.post(`${API_URL}/login`, loginData);
     return response.data;
   } catch (error) {
-    throw error.response
-      ? error.response.data
-      : new Error("Failed to check login status");
+    console.error(
+      "Login error:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
   }
 };
+
+const logout = async () => {
+  try {
+    const response = await axios.post(`${API_URL}/logout`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Logout error:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
+const getLoginStatus = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/loginStatus`);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Login status error:",
+      error.response ? error.response.data : error.message
+    );
+    throw error;
+  }
+};
+
+// 객체를 변수에 할당한 후 기본(default) 내보내기
+const memberService = {
+  register,
+  login,
+  logout,
+  getLoginStatus,
+};
+
+export default memberService;

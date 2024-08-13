@@ -1,6 +1,6 @@
 // src/AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { login, checkLoginStatus } from "../service/memberServices";
+import memberService from "../service/memberServices";
 
 const AuthContext = createContext();
 
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   // }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, loading }}>
+    <AuthContext.Provider value={{ user, setUser, memberService, loading }}>
       {children}
     </AuthContext.Provider>
   );

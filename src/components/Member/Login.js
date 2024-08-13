@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../AuthContext";
-import { login } from "../../service/memberServices";
+import { Link } from "react-router-dom";
+import memberService from "../../service/memberServices";
 
 const Login = () => {
   const [mid, setMid] = useState("");
   const [mpw, setMpw] = useState("");
-  const [error, setError] = useState("");
-  const { setUser } = useAuth();
-  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     try {
-      await login({ mid, mpw });
-      setUser(mid); // 사용자 정보를 AuthContext에 저장
-      navigate("/"); // 로그인 후 홈 페이지로 이동
-    } catch (err) {
-      setError(err.message); // 로그인 실패 시 에러 메시지 표시
+      const response = await memberService.login({ mid, mpw });
+      setMessage(response); // 로그인 성공 메시지
+    } catch (error) {
+      setMessage("로그인 실패");
     }
   };
 
@@ -56,7 +51,7 @@ const Login = () => {
             </Link>
             <button type="submit">Login</button>
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
+          {message && <p>{message}</p>}
         </form>
       </div>
     </div>
