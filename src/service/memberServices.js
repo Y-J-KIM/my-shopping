@@ -28,6 +28,8 @@ const login = async (loginData) => {
   }
 };
 
+
+
 const logout = async () => {
   try {
     const response = await axios.post(`${API_URL}/logout`);
