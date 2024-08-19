@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
 import { Link } from "react-router-dom";
-import memberService from "../../service/memberServices";
+import { useAuth } from "../AuthContext";
 
 const Login = () => {
   const [mid, setMid] = useState("");
   const [mpw, setMpw] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     try {
-      const response = await memberService.login({ mid, mpw });
-      setMessage(response); // 로그인 성공 메시지
-    } catch (error) {
-      setMessage("로그인 실패");
+      await login({ mid, mpw });
+    } catch (err) {
+      setError("Invalid id or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,7 +30,7 @@ const Login = () => {
       <Header />
       <div className="login-page">
         <h1>Login</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="mid">ID:</label>
             <input
@@ -51,7 +57,7 @@ const Login = () => {
             </Link>
             <button type="submit">Login</button>
           </div>
-          {message && <p>{message}</p>}
+          {error && <p>{error}</p>}
         </form>
       </div>
     </div>
