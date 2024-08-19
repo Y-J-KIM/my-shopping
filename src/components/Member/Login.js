@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
@@ -9,10 +10,24 @@ function Login() {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+=======
+import { useAuth } from "../AuthContext";
+
+const Login = () => {
+  const [mid, setMid] = useState("");
+  const [mpw, setMpw] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
+>>>>>>> f230fdaa703e39289c5282be11247cae90424d9d
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     try {
+<<<<<<< HEAD
       const response = await axios.post('http://localhost:8080/api/users/login', null, {
         params: { userId, password }
       });
@@ -24,6 +39,13 @@ function Login() {
       }
     } catch (error) {
       alert('Invalid credentials');
+=======
+      await login({ mid, mpw });
+    } catch (err) {
+      setError("Invalid id or password");
+    } finally {
+      setLoading(false);
+>>>>>>> f230fdaa703e39289c5282be11247cae90424d9d
     }
   };
 
@@ -57,6 +79,10 @@ function Login() {
             </Link>
             <button type="submit">Login</button>
           </div>
+<<<<<<< HEAD
+=======
+          {error && <p>{error}</p>}
+>>>>>>> f230fdaa703e39289c5282be11247cae90424d9d
         </form>
       </div>
     </div>
