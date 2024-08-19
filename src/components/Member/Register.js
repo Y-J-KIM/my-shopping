@@ -1,67 +1,73 @@
 // src/components/Member/Register.js
 
 import React, { useState } from "react";
-import { register } from "../../service/memberServices";
 import "./Register.css";
 import Header from "../Home/Header";
 import { useNavigate } from "react-router-dom";
-import memberService from "../../service/memberServices";
+import axios from 'axios';
+import AddressInput from "./AddressInput";
 
-const Register = () => {
-  const [mid, setMid] = useState("");
-  const [mpw, setMpw] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
+function Register() {
+  const [userId, setUserId] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-
     try {
-      await memberService.register({ mid, mpw, name, email });
-      navigate("/member/login"); // 회원가입 후 로그인 페이지로 이동
-    } catch (err) {
-      setError(err.message); // 회원가입 실패 시 에러 메시지 표시
+      const response = await axios.post('http://localhost:8080/api/users/register', {
+        userId, username, email, password, address
+      });
+
+      if (response.status === 200) {
+        alert('Registration successful!');
+        navigate('/login');
+      }
+    } catch (error) {
+      alert('Registration failed. Try again.');
     }
   };
+
+
   return (
     <div>
       <Header />
       <div className="signup-page">
         <h1>회원 가입</h1>
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="mid">아이디:</label>
+            <label htmlFor="userId">아이디:</label>
             <input
               type="text"
-              id="mid"
-              name="mid"
-              value={mid}
-              onChange={(e) => setMid(e.target.value)}
+              // id="mid"
+              // name="mid"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
             />
           </div>
           <div>
-            <label htmlFor="mpw">비밀번호:</label>
+            <label htmlFor="password">비밀번호:</label>
             <input
               type="password"
-              id="mpw"
-              name="mpw"
-              value={mpw}
-              onChange={(e) => setMpw(e.target.value)}
+              // id="mpw"
+              // name="mpw"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <div>
-            <label htmlFor="name">이름:</label>
+            <label htmlFor="username">이름:</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              // id="name"
+              // name="name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -76,9 +82,14 @@ const Register = () => {
               required
             />
           </div>
+          <div>
+            <label htmlFor="address"></label>
+            <AddressInput onSave={(fullAddress) => setAddress(fullAddress)}/>
+          </div>
+
           <button type="submit">가입하기</button>
         </form>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
       </div>
     </div>
   );

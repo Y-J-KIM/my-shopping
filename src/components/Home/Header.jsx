@@ -38,10 +38,13 @@ const Header = () => {
           {!user ? (
             <>
               <li>
-                <Link to="/member/login">Login</Link>
+                <Link to="/users/login">Login</Link>
               </li>
               <li>
-                <Link to="/member/join">Join</Link>
+                <Link to="/users/register">Join</Link>
+              </li>
+              <li>
+                <Link to="/admin/product">관리자</Link>
               </li>
             </>
           ) : (

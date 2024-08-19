@@ -2,20 +2,28 @@ import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
 import { Link } from "react-router-dom";
-import memberService from "../../service/memberServices";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
-const Login = () => {
-  const [mid, setMid] = useState("");
-  const [mpw, setMpw] = useState("");
-  const [message, setMessage] = useState("");
+function Login() {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await memberService.login({ mid, mpw });
-      setMessage(response); // 로그인 성공 메시지
+      const response = await axios.post('http://localhost:8080/api/users/login', null, {
+        params: { userId, password }
+      });
+
+      if (response.status === 200) {
+        // 로그인 성공 시
+        alert('Login successful!');
+        navigate('/');
+      }
     } catch (error) {
-      setMessage("로그인 실패");
+      alert('Invalid credentials');
     }
   };
 
@@ -24,14 +32,13 @@ const Login = () => {
       <Header />
       <div className="login-page">
         <h1>Login</h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="mid">ID:</label>
+            <label>ID:</label>
             <input
               type="text"
-              id="mid"
-              value={mid}
-              onChange={(e) => setMid(e.target.value)}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
               required
             />
           </div>
@@ -39,9 +46,8 @@ const Login = () => {
             <label htmlFor="password">Password:</label>
             <input
               type="password"
-              id="mpw"
-              value={mpw}
-              onChange={(e) => setMpw(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -51,7 +57,6 @@ const Login = () => {
             </Link>
             <button type="submit">Login</button>
           </div>
-          {message && <p>{message}</p>}
         </form>
       </div>
     </div>

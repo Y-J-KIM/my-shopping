@@ -6,8 +6,6 @@ import { fetchProductById } from "../../service/productServices";
 import { addReview, getReviewsByProductId } from "../../service/reviewServices";
 import Header from "../Home/Header";
 import "./ProductDetail.css";
-import { getLoginStatus } from "../../service/memberServices";
-import memberService from "../../service/memberServices";
 
 const ProductDetail = () => {
   const { id } = useParams();
