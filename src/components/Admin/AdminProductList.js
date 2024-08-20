@@ -91,7 +91,7 @@ const AdminProductList = () => {
                   <tr key={product.id}>
                     <td>
                       <img 
-                        src={`http://localhost:8080/images/${product.image}`} 
+                        src={`http://localhost:8080/images/${product.image.replace('/images/', '')}`}  
                         alt="상품 이미지" 
                         style={{ width: '100px' }} 
                       />

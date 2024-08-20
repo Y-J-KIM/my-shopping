@@ -1,25 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Header.css";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Header = () => {
-  const { user, logout } = useAuth(); // useAuth 훅을 사용하여 user와 logout 함수 가져오기
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  // const logout = async () => {
-  //   try {
-  //     // 서버에 로그아웃 요청
-  //     await axios.post("/api/member/logout");
-  //     // 사용자 상태를 초기화
-  //     //setUser(null);
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Logout failed", error);
-  //   }
-  // };
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   return (
     <header>
@@ -58,10 +54,9 @@ const Header = () => {
                 </Link>
               </li>
               <li>
-                {/* <button onClick={logout}>Logout</button> */}
-                <Link to="/member/logout" onClick={logout}>
+                <a href="/member/logout" onClick={handleLogout}>
                   로그아웃
-                </Link>
+                </a>
               </li>
             </>
           )}
