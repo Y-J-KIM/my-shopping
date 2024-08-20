@@ -10,7 +10,9 @@
 .hero_section > div {
   justify-content: center;
   flex-direction: column;
-  text-align: center;
+  /* text-align: center; */
+  margin-top: 20px;
+  display: inline-flex;
 }
 
 .hero_title {
@@ -36,6 +38,7 @@
   color: #000;
   transition: all 0.3s ease-in-out;
   text-decoration: none;
+  width: 140px;
 }
 
 .hero_link:hover {
