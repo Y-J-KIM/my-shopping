@@ -1,65 +1,37 @@
-// ProductDetail.js
-
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { fetchProductById } from "../../service/productServices";
-import { addReview, getReviewsByProductId } from "../../service/reviewServices";
-import Header from "../Home/Header";
-import "./ProductDetail.css";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Header from '../Home/Header';
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [username, setUsername] = useState("");
-  const [reviews, setReviews] = useState([]);
-  const [newReview, setNewReview] = useState({ comment: "", rating: 5 });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const { id } = useParams();  // URL에서 id 파라미터를 가져옴
+    const [product, setProduct] = useState(null); // 상품 정보를 저장할 state
+    const [error, setError] = useState(null); // 에러 정보를 저장할 state
 
-  useEffect(() => {
-    const loadProduct = async () => {
-      try {
-        const data = await fetchProductById(id);
-        setProduct(data);
+    useEffect(() => {
+        // 상품 정보를 가져오기 위한 비동기 함수
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`/api/products/${id}`); // API 요청
+                if (!response.ok) {
+                    throw new Error('Product not found');
+                }
+                const data = await response.json(); // 응답 데이터를 JSON으로 변환
+                setProduct(data); // 상품 정보 state 업데이트
+            } catch (error) {
+                setError(error.message); // 에러 메시지 state 업데이트
+            }
+        };
 
-        const reviewsData = await getReviewsByProductId(id);
-        setReviews(reviewsData);
-      } catch (err) {
-        setError(err.message || "Failed to fetch product details");
-      } finally {
-        setLoading(false);
-      }
-    };
+        fetchProduct(); // 컴포넌트 마운트 시 상품 정보 가져오기 실행
+    }, [id]); // id가 변경될 때마다 useEffect 실행
 
-    loadProduct();
-  }, []);
-
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const newReviewId = await addReview({
-        ...newReview,
-        productId: id,
-        username: "Anonymous", // 예시로, 실제로는 로그인된 사용자 정보 사용
-      });
-      setReviews([...reviews, { ...newReview, id: newReviewId }]);
-      setNewReview({ comment: "", rating: 5 });
-    } catch (err) {
-      setError(err.message || "Failed to submit review");
+    if (error) {
+        return <div>404 - Product not found</div>; // 상품이 없는 경우 에러 메시지 표시
     }
-  };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!product) {
-    return <div>Product not found</div>;
-  }
+    if (!product) {
+        return <div>Loading...</div>; // 상품 정보를 불러오는 동안 로딩 표시
+    }
 
   return (
     <div>
@@ -77,11 +49,11 @@ const ProductDetail = () => {
                 <span className="sold-out-text ms-2">품절</span>
               </p>
             ) : (
-              <p>가격: ${product.price}</p>
+              <p> {Intl.NumberFormat().format(product.price)} 원</p>
             )}
             <p>설명: {product.description}</p>
-            <p>재고: {product.stock}</p>
-            <p>상태: {product.inSoldout ? "Sold Out" : "Available"}</p>
+            {/* <p>재고: {product.stock}</p>
+            <p>상태: {product.inSoldout ? "Sold Out" : "Available"}</p> */}
 
             <form id="cart-form" action="#" method="post">
               <input type="hidden" name="productId" value={product.id} />
@@ -109,7 +81,7 @@ const ProductDetail = () => {
         </a>
       </div>
 
-      {/* 리뷰 작성 섹션 */}
+      {/* 리뷰 작성 섹션
       <div className="mt-4">
         <h2>리뷰 작성</h2>
         <form onSubmit={handleReviewSubmit}>
@@ -161,9 +133,9 @@ const ProductDetail = () => {
             리뷰 제출
           </button>
         </form>
-      </div>
+      </div> */}
 
-      {/* 리뷰 리스트 섹션 */}
+      {/* 리뷰 리스트 섹션
       <div className="mt-4">
         <h2>리뷰</h2>
         {reviews.length === 0 ? (
@@ -183,7 +155,7 @@ const ProductDetail = () => {
             </div>
           ))
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

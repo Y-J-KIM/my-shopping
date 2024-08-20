@@ -1,79 +1,90 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getBoardListAPI } from "../../service/boardServices";
-import Header from "../Home/Header";
-import "./boardList.css";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Header from '../Home/Header';
+import './boardList.css';
+
+export const getBoardListAPI = (page, size, keyword) => {
+  return axios.get(`/api/board/list`, {
+      params: {
+          page: page,
+          size: size,
+          keyword: keyword
+      }
+  });
+};
 
 const BoardList = () => {
-  const [boardList, setBoardList] = useState([]);
+  const [boards, setBoards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const [keyword, setKeyword] = useState("");
   const [total, setTotal] = useState(0);
+  const [keyword, setKeyword] = useState('');
+
+  
+
+  const fetchBoards = async () => {
+    try {
+        const { data } = await getBoardListAPI(page, size, keyword);
+        console.log('Fetched data:', data); // 데이터 구조 확인
+        setBoards(data.dtoList || []); // 데이터가 없으면 빈 배열로 설정
+        setTotal(data.total); // 데이터의 총 개수 설정
+    } catch (error) {
+        console.error('Failed to fetch board list', error);
+    } finally {
+        setLoading(false);
+    }
+};
 
   useEffect(() => {
-    fetchBoardList(); // 페이지 로드 시 목록을 가져옵니다.
-  }, [page, size, keyword]);
-
-  const fetchBoardList = async () => {
-    try {
-      const { data } = await getBoardListAPI(page, size, keyword);
-      setBoardList(data.dtoList || []); // 데이터가 없으면 빈 배열로 설정
-      setTotal(data.total); // 데이터의 총 개수 설정
-    } catch (error) {
-      console.error("Failed to fetch board list", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+    fetchBoards();
+  }, [page, size, keyword]); // page, size, keyword가 변경될 때마다 fetchBoards 호출
 
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1); // 검색 시 페이지를 1로 초기화
-    fetchBoardList();
+    fetchBoards(); // 검색 후 다시 게시글을 가져옴
   };
 
   const handlePageChange = (newPage) => {
-    setPage(newPage);
+    if (newPage > 0 && newPage <= Math.ceil(total / size)) {
+      setPage(newPage);
+    }
   };
 
   return (
     <div>
       <Header />
       <div>
-        <h1>Board List</h1>
+        <h1>게시글 목록</h1>
         <form onSubmit={handleSearch}>
           <input
             type="text"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            placeholder="Search..."
+            placeholder="검색..."
           />
-          <button type="submit">Search</button>
+          <button type="submit">검색</button>
         </form>
         <table className="board-table">
           <thead>
             <tr>
-              <th>No</th>
-              <th>Title</th>
-              <th>Writer</th>
-              <th>Date</th>
+              <th>번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성일</th>
             </tr>
           </thead>
           <tbody>
-            {boardList.length === 0 ? (
+            {boards.length === 0 ? (
               <tr>
                 <td colSpan="4" className="no-boards-message">
                   게시글이 없습니다.
                 </td>
               </tr>
             ) : (
-              boardList.map((board) => (
+              boards.map((board) => (
                 <tr key={board.bno}>
                   <td>{board.bno}</td>
                   <td>
@@ -84,8 +95,8 @@ const BoardList = () => {
                       {board.title}
                     </Link>
                   </td>
-                  <td>{board.writer}</td>
-                  <td>{board.regdate}</td>
+                  <td>{board.writer}</td>                
+                  <td>{new Date(board.regDate).toLocaleDateString()}</td>
                 </tr>
               ))
             )}
@@ -101,14 +112,14 @@ const BoardList = () => {
               onClick={() => handlePageChange(page - 1)}
               disabled={page <= 1}
             >
-              Previous
+              이전
             </button>
-            <span> Page {page} </span>
+            <span> 페이지 {page} </span>
             <button
               onClick={() => handlePageChange(page + 1)}
               disabled={page * size >= total}
             >
-              Next
+              다음
             </button>
           </div>
         </div>

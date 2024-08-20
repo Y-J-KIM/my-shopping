@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import "./ProductList.css"
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -54,9 +55,9 @@ const ProductList = () => {
 
                   <p className="product-price">{Intl.NumberFormat().format(product.price)} 원</p>
 
-                  <p className="product-status">
+                  {/* <p className="product-status">
                     Status: {product.inSoldout ? "Sold Out" : "Available"}
-                  </p>
+                  </p> */}
                 </div>
               </div>
             ))

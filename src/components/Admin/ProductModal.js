@@ -26,12 +26,15 @@ const ProductModal = ({ show, handleClose, onAddProduct }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:3000/products/new', formData, {
+            const response = await axios.post('http://localhost:3000/api/admin/product/new/pro', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            onAddProduct(response.data); // 상위 컴포넌트에 새 제품 전달
+
+            // 새로운 제품 추가 후 작업
+            console.log('Product added:', response.data);
+
             handleClose(); // 모달 닫기
         } catch (error) {
             console.error('Error adding product:', error);

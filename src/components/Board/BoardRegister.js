@@ -1,35 +1,34 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerBoardAPI } from "../../service/boardServices";
-import Header from "../Home/Header";
-import "./BoardRegister.css"; // 스타일을 위한 CSS 파일
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Header from '../Home/Header';
+import "./BoardRegister.css";
 
 const BoardRegister = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [writer, setWriter] = useState('');
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("writer", writer);
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('writer', writer);
     if (image) {
-      formData.append("image", image);
+      formData.append('image', image);
     }
 
     try {
-      await registerBoardAPI(formData);
-      alert("Board registered successfully!");
-      navigate("/board/list");
+      await axios.post('/api/board/register', formData);
+      navigate('/board/list');
     } catch (error) {
-      console.error("Failed to register board", error);
+      console.error('Failed to register board', error);
     }
   };
+
   return (
     <div>
       <Header />
@@ -62,7 +61,7 @@ const BoardRegister = () => {
               id="writer"
               value={writer}
               onChange={(e) => setWriter(e.target.value)}
-              readOnly
+              //readOnly
             />
           </div>
           <div>
@@ -79,5 +78,6 @@ const BoardRegister = () => {
     </div>
   );
 };
+
 
 export default BoardRegister;

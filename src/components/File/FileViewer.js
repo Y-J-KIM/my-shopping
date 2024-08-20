@@ -1,36 +1,36 @@
-// src/components/FileViewer.js
+// // src/components/FileViewer.js
 
-import React, { useEffect, useState } from "react";
-import { fetchFile } from "../service/fileServices";
+// import React, { useEffect, useState } from "react";
+// import { fetchFile } from "../service/fileServices";
 
-const FileViewer = ({ fileName }) => {
-  const [fileUrl, setFileUrl] = useState(null);
-  const [error, setError] = useState("");
+// const FileViewer = ({ fileName }) => {
+//   const [fileUrl, setFileUrl] = useState(null);
+//   const [error, setError] = useState("");
 
-  useEffect(() => {
-    const loadFile = async () => {
-      try {
-        const fileBlob = await fetchFile(fileName);
-        setFileUrl(URL.createObjectURL(fileBlob));
-      } catch (err) {
-        setError("Failed to load file.");
-      }
-    };
+//   useEffect(() => {
+//     const loadFile = async () => {
+//       try {
+//         const fileBlob = await fetchFile(fileName);
+//         setFileUrl(URL.createObjectURL(fileBlob));
+//       } catch (err) {
+//         setError("Failed to load file.");
+//       }
+//     };
 
-    loadFile();
-  }, [fileName]);
+//     loadFile();
+//   }, [fileName]);
 
-  return (
-    <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {fileUrl && (
-        <div>
-          <img src={fileUrl} alt="File" style={{ maxWidth: "100%" }} />
-          {/* 파일이 이미지가 아닌 경우에는 다른 방법으로 표시 */}
-        </div>
-      )}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       {error && <p style={{ color: "red" }}>{error}</p>}
+//       {fileUrl && (
+//         <div>
+//           <img src={fileUrl} alt="File" style={{ maxWidth: "100%" }} />
+//           {/* 파일이 이미지가 아닌 경우에는 다른 방법으로 표시 */}
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
 
-export default FileViewer;
+// export default FileViewer;

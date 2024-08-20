@@ -6,20 +6,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Header = () => {
-  const { user, setUser } = useAuth(); // 로그인 상태와 로그아웃 함수 가져오기
+  const { user, logout } = useAuth(); // useAuth 훅을 사용하여 user와 logout 함수 가져오기
   const navigate = useNavigate();
 
-  const logout = async () => {
-    try {
-      // 서버에 로그아웃 요청
-      await axios.post("/api/member/logout");
-      // 사용자 상태를 초기화
-      setUser(null);
-      navigate("/");
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
+  // const logout = async () => {
+  //   try {
+  //     // 서버에 로그아웃 요청
+  //     await axios.post("/api/member/logout");
+  //     // 사용자 상태를 초기화
+  //     //setUser(null);
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.error("Logout failed", error);
+  //   }
+  // };
 
   return (
     <header>
