@@ -2,33 +2,39 @@ import React, { useState } from "react";
 import "./Register.css";
 import Header from "../Home/Header";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 import AddressInput from "./AddressInput";
 
 function Register() {
-  const [userId, setUserId] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [address, setAddress] = useState('');
+  const [userId, setUserId] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/users/register', {
-        userId, username, email, password, address
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/users/register",
+        {
+          userId,
+          username,
+          email,
+          password,
+          address,
+        }
+      );
 
       if (response.status === 200) {
-        alert('Registration successful!');
-        navigate('/login');
+        alert("Registration successful!");
+        navigate("/users/login");
       }
     } catch (error) {
-      alert('Registration failed. Try again.');
+      alert("Registration failed. Try again.");
     }
   };
-
 
   return (
     <div>
@@ -82,7 +88,7 @@ function Register() {
           </div>
           <div>
             <label htmlFor="address"></label>
-            <AddressInput onSave={(fullAddress) => setAddress(fullAddress)}/>
+            <AddressInput onSave={(fullAddress) => setAddress(fullAddress)} />
           </div>
 
           <button type="submit">가입하기</button>
@@ -91,6 +97,6 @@ function Register() {
       </div>
     </div>
   );
-};
+}
 
 export default Register;
