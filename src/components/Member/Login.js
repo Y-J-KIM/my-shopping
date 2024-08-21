@@ -2,27 +2,31 @@ import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../AuthContext"; // useAuth 훅을 사용하여 로그인 기능을 가져옵니다.
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../UserContext";
+import { loginUser } from "../services/UserServices";
 
-function Login() {
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
-  const { login } = useAuth(); // useAuth 훅을 사용하여 로그인 함수를 가져옵니다.
+const Login = () => {
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { setUser } = useUser(); // UserContext에서 setUser 가져오기
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      await login(userId, password); // useAuth 훅을 사용하여 로그인 요청을 보냅니다.
-      alert('로그인 성공!');
-      navigate('/'); // 로그인 성공 후 홈 페이지로 리다이렉트합니다.
+      const credentials = { userId, password };
+      const result = await loginUser(credentials);
+
+      // 로그인 성공 시 UserContext 업데이트
+      setUser(result);
+      // 예를 들어, 홈 페이지로 리디렉션
+      navigate("/");
     } catch (error) {
-      alert('잘못된 자격 증명입니다.');
+      alert("Error logging in: " + error.message);
     }
   };
-
 
   return (
     <div>
@@ -55,6 +59,7 @@ function Login() {
             <button type="submit">Login</button>
           </div>
         </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </div>
   );
