@@ -28,11 +28,11 @@ function Register() {
       );
 
       if (response.status === 200) {
-        alert("Registration successful!");
+        alert("가입이 완료되었습니다!");
         navigate("/users/login");
       }
     } catch (error) {
-      alert("Registration failed. Try again.");
+      alert("가입 실패");
     }
   };
 

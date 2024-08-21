@@ -9,7 +9,7 @@ import BoardList from "../Board/boardList";
 import BoardEditPage from "../Board/BoardEditPage";
 import BoardDetailPage from "../Board/BoardDetailPage";
 import BoardRegister from "../Board/BoardRegister";
-// import Cart from "../Cart/Cart";
+import Cart from "../Cart/Cart";
 // import Order from "../Order/Order";
 import AdminProductList from "../Admin/AdminProductList";
 import ProductModal from "../Admin/ProductModal";
@@ -29,8 +29,8 @@ const Routing = () => {
       <Route path="/board/modify/:id" element={<BoardEditPage />} />
       <Route path="/users/register" element={<Register />} />
       <Route path="/users/login" element={<Login />} />
-      {/* <Route path="/cart" element={<Cart />} />
-      <Route path="/myorders" element={<Order />} /> */}
+      <Route path="/cart" element={<Cart />} />
+      {/* <Route path="/myorders" element={<Order />} /> */}
       <Route path="/admin/product" element={<AdminProductList/>}/>
       <Route path="/admin/product/new/pro" element={<ProductModal/>}/>
       <Route path="/admin/product/modify/{id}" element={<ModifyModal/>}/>
