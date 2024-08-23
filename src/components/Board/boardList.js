@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Header from '../Home/Header';
-import './boardList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import Header from "../Home/Header";
+import Footer from "../Home/Footer";
+import "./boardList.css";
 
 export const getBoardListAPI = (page, size, keyword) => {
   return axios.get(`/api/board/list`, {
-      params: {
-          page: page,
-          size: size,
-          keyword: keyword
-      }
+    params: {
+      page: page,
+      size: size,
+      keyword: keyword,
+    },
   });
 };
 
@@ -20,22 +21,20 @@ const BoardList = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [total, setTotal] = useState(0);
-  const [keyword, setKeyword] = useState('');
-
-  
+  const [keyword, setKeyword] = useState("");
 
   const fetchBoards = async () => {
     try {
-        const { data } = await getBoardListAPI(page, size, keyword);
-        console.log('Fetched data:', data); // 데이터 구조 확인
-        setBoards(data.dtoList || []); // 데이터가 없으면 빈 배열로 설정
-        setTotal(data.total); // 데이터의 총 개수 설정
+      const { data } = await getBoardListAPI(page, size, keyword);
+      console.log("Fetched data:", data); // 데이터 구조 확인
+      setBoards(data.dtoList || []); // 데이터가 없으면 빈 배열로 설정
+      setTotal(data.total); // 데이터의 총 개수 설정
     } catch (error) {
-        console.error('Failed to fetch board list', error);
+      console.error("Failed to fetch board list", error);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
   useEffect(() => {
     fetchBoards();
@@ -95,7 +94,7 @@ const BoardList = () => {
                       {board.title}
                     </Link>
                   </td>
-                  <td>{board.writer}</td>                
+                  <td>{board.writer}</td>
                   <td>{new Date(board.regDate).toLocaleDateString()}</td>
                 </tr>
               ))
@@ -124,6 +123,7 @@ const BoardList = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

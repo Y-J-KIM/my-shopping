@@ -94,6 +94,9 @@ const Header = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/mypage">마이페이지</Link>
+              </li>
+              <li>
                 <Link to="/" onClick={handleLogout}>
                   Logout
                 </Link>

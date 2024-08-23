@@ -15,10 +15,11 @@ import AdminProductList from "../Admin/AdminProductList";
 import ProductModal from "../Admin/ProductModal";
 import ModifyModal from "../Admin/ModifyModal";
 import { AuthProvider } from "../AuthContext";
+import MyPage from "../Member/Mypage";
+import EditUser from "../Member/EditUser";
 
 const Routing = () => {
   return (
-    
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/products" element={<ProductPage />} />
@@ -30,17 +31,18 @@ const Routing = () => {
       <Route path="/users/register" element={<Register />} />
       <Route path="/users/login" element={<Login />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/mypage" element={<MyPage />} />
+      <Route path="/edit-user/:id" element={<EditUser />} />
       {/* <Route path="/myorders" element={<Order />} /> */}
-      <Route path="/admin/product" element={<AdminProductList/>}/>
-      <Route path="/admin/product/new/pro" element={<ProductModal/>}/>
-      <Route path="/admin/product/modify/{id}" element={<ModifyModal/>}/>
+      <Route path="/admin/product" element={<AdminProductList />} />
+      <Route path="/admin/product/new/pro" element={<ProductModal />} />
+      <Route path="/admin/product/modify/{id}" element={<ModifyModal />} />
       {/* <Route path="/member/logout" element={<Logout />} /> */}
       {/* <Route element={<ProtectedRoute user={user} />}>
         
         
       </Route> */}
     </Routes>
-    
   );
 };
 
