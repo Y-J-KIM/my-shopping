@@ -18,7 +18,7 @@ const BoardRegister = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("writer", user.id); // writer에 user.id 설정
+    formData.append("writer", user.username); // writer에 user.id 설정
     if (image) {
       formData.append("image", image);
     }
@@ -61,7 +61,7 @@ const BoardRegister = () => {
             <input
               type="text"
               id="writer"
-              value={user.id} // writer 필드에 user.id 설정
+              value={user.username} // writer 필드에 user.id 설정
               readOnly
             />
           </div>

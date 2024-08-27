@@ -6,7 +6,7 @@ import Footer from "../Home/Footer";
 import "./EditUser.css";
 
 function EditUser() {
-  const { id } = useParams(); // URL에서 유저 ID를 가져옵니다.
+  const { userId } = useParams(); // URL에서 유저 ID를 가져옵니다.
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -17,7 +17,7 @@ function EditUser() {
 
   // 컴포넌트가 처음 렌더링될 때 유저 정보를 불러옵니다.
   useEffect(() => {
-    fetch(`/api/users/${id}`)
+    fetch(`/api/users/${userId}`)
       .then((response) => response.json())
       .then((data) => {
         // 유저 정보를 상태로 설정
@@ -28,7 +28,7 @@ function EditUser() {
           address: data.address,
         });
       });
-  }, [id]);
+  }, [userId]);
 
   // 폼 필드의 변경을 처리합니다.
   const handleChange = (e) => {
@@ -42,7 +42,7 @@ function EditUser() {
   // 폼 제출을 처리합니다.
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`/api/users/${id}`, {
+    fetch(`/api/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

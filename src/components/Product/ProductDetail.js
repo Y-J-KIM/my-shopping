@@ -4,6 +4,7 @@ import axios from "axios";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
 import { useUser } from "../UserContext"; // UserContext에서 훅을 가져옴
+import { addItemToCart } from "../services/CartService";
 
 const ProductDetail = () => {
   const { id } = useParams(); // URL에서 id 파라미터를 가져옴
@@ -29,24 +30,15 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     try {
-      await axios.post("/api/cart/add", {
-        params: {
-          userId: user.userId,
-          productId: product.id,
-          quantity: quantity,
-        },
-        withCredentials: true,
-      });
-
-      // 장바구니 페이지로 리다이렉트
-      navigate("/cart");
+      await addItemToCart(product.id, quantity); // cartService 함수 호출
+      navigate("/cart"); // 장바구니 페이지로 리다이렉트
     } catch (error) {
       setError("Error adding item to cart");
     }
   };
 
   if (error) {
-    return <div>404 - Product not found</div>; // 상품이 없는 경우 에러 메시지 표시
+    return <div>{error}</div>; // 에러 메시지 표시
   }
 
   if (!product) {
