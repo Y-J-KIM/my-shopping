@@ -1,30 +1,25 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Header from "../Home/Header";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
-import { loginUser } from "../services/UserServices";
 
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { setUser } = useUser(); // UserContext에서 setUser 가져오기
+  const { login } = useUser(); // UserContext에서 login 함수 가져오기
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const credentials = { userId, password };
-      const result = await loginUser(credentials);
-
-      // 로그인 성공 시 UserContext 업데이트
-      setUser(result);
-      // 예를 들어, 홈 페이지로 리디렉션
+      // UserContext의 login 함수 호출
+      await login({ userId, password });
+      // 로그인 성공 시 홈 페이지로 리디렉션
       navigate("/");
     } catch (error) {
-      alert("Error logging in: " + error.message);
+      setError("Error logging in: " + error.message);
     }
   };
 
