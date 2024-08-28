@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
 import { useUser } from "../UserContext"; // UserContext에서 훅을 가져옴
-import { addItemToCart } from "../services/CartService";
+import CartService from "../services/CartService";
 
 const ProductDetail = () => {
   const { id } = useParams(); // URL에서 id 파라미터를 가져옴
@@ -13,7 +13,7 @@ const ProductDetail = () => {
   const [error, setError] = useState(null); // 에러 정보를 저장할 state
   const navigate = useNavigate(); // 페이지 이동을 위한 훅
   const { user } = useUser(); // 로그인된 사용자 정보 가져오기
-
+  //console.log(user);
   useEffect(() => {
     // 상품 정보를 가져오기 위한 비동기 함수
     const fetchProduct = async () => {
@@ -30,10 +30,15 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     try {
-      await addItemToCart(product.id, quantity); // cartService 함수 호출
-      navigate("/cart"); // 장바구니 페이지로 리다이렉트
+      console.log(user.userId, product.id, quantity);
+      //옵션으로 credentials: 'include'를 추가하여 쿠키를 포함시킵니다.
+      await CartService.addItemToCart(user.userId, product.id, quantity, {
+        credentials: "include", // 이 부분이 중요
+      });
+      alert("Item added to cart!");
     } catch (error) {
-      setError("Error adding item to cart");
+      alert("Failed to add item to cart");
+      console.error(error);
     }
   };
 

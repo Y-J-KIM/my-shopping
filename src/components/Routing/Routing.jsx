@@ -8,7 +8,7 @@ import BoardList from "../Board/boardList";
 import BoardEditPage from "../Board/BoardEditPage";
 import BoardDetailPage from "../Board/BoardDetailPage";
 import BoardRegister from "../Board/BoardRegister";
-import CartPage from "../Cart/CartPage";
+import Cart from "../Cart/Cart";
 import AdminProductList from "../Admin/AdminProductList";
 import ProductModal from "../Admin/ProductModal";
 import ModifyModal from "../Admin/ModifyModal";
@@ -27,7 +27,8 @@ const Routing = () => {
       <Route path="/board/modify/:id" element={<BoardEditPage />} />
       <Route path="/users/register" element={<Register />} />
       <Route path="/users/login" element={<Login />} />
-      <Route path="/cart" element={<CartPage />} />
+      <Route path="/cart" element={<Cart />} />
+      {/* <Route path="/cart/{userId}/items" element={<Cart />} /> */}
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/edit-user/:id" element={<EditUser />} />
       {/* <Route path="/myorders" element={<Order />} /> */}

@@ -1,60 +1,28 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
-const API_URL = "/api/cart";
+// API 엔드포인트 설정
+const API_URL = "http://localhost:8080/api/cart";
 
-export const getCartItems = async (userId) => {
-  try {
-    const response = await axios.get(`${API_URL}/items`, {
-      params: { userId },
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching cart items:", error);
-    throw error;
-  }
+const CartService = {
+  addItemToCart: async (userId, productId, quantity) => {
+    try {
+      await axios.post(`${API_URL}/${userId}/items`, { productId, quantity });
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      throw error;
+    }
+  },
+
+  loadCart: async (userId) => {
+    try {
+      const response = await axios.get(`${API_URL}/${userId}/load`);
+      return response.data;
+    } catch (error) {
+      console.error("Error loading cart:", error);
+      throw error;
+    }
+  },
 };
 
-export const addItemToCart = async (productId, quantity) => {
-  try {
-    const response = await axios.post(
-      `${API_URL}/add`,
-      { productId, quantity },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error adding item to cart:", error);
-    throw error;
-  }
-};
-
-export const updateCartItemQuantity = async (itemId, quantity) => {
-  try {
-    const response = await axios.post(`${API_URL}/updateQuantity`, null, {
-      params: { id: itemId, quantity },
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error updating cart item quantity:", error);
-    throw error;
-  }
-};
-
-export const removeCartItem = async (itemId) => {
-  try {
-    const response = await axios.delete(`${API_URL}/items/remove/${itemId}`, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error removing cart item:", error);
-    throw error;
-  }
-};
+export default CartService;
