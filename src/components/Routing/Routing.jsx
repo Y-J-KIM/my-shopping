@@ -14,6 +14,7 @@ import ProductModal from "../Admin/ProductModal";
 import ModifyModal from "../Admin/ModifyModal";
 import MyPage from "../Member/Mypage";
 import EditUser from "../Member/EditUser";
+import Order from "../Order/UserOrder"
 
 const Routing = () => {
   return (
@@ -31,7 +32,7 @@ const Routing = () => {
       {/* <Route path="/cart/{userId}/items" element={<Cart />} /> */}
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/edit-user/:id" element={<EditUser />} />
-      {/* <Route path="/myorders" element={<Order />} /> */}
+      <Route path="/myorders" element={<Order />} />
       <Route path="/admin/product" element={<AdminProductList />} />
       <Route path="/admin/product/new/pro" element={<ProductModal />} />
       <Route path="/admin/product/modify/{id}" element={<ModifyModal />} />

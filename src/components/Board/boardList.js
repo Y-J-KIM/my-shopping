@@ -55,7 +55,7 @@ const BoardList = () => {
   return (
     <div>
       <Header />
-      <div>
+      <div className="board-main">
         <h1>게시글 목록</h1>
         <form onSubmit={handleSearch}>
           <input

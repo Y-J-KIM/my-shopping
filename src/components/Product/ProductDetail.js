@@ -30,9 +30,9 @@ const ProductDetail = () => {
 
   const handleAddToCart = async () => {
     try {
-      console.log(user.userId, product.id, quantity);
+      console.log(user.id, product.id, quantity);
       //옵션으로 credentials: 'include'를 추가하여 쿠키를 포함시킵니다.
-      await CartService.addItemToCart(user.userId, product.id, quantity, {
+      await CartService.addItemToCart(user.id, product.id, quantity, {
         credentials: "include", // 이 부분이 중요
       });
       alert("Item added to cart!");

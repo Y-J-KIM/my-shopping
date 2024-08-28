@@ -1,0 +1,50 @@
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .cart-table th,
+  .cart-table td {
+    border: 1px solid #ddd;
+    padding: 12px; /* 패딩을 늘려서 넓게 만듭니다 */
+    text-align: left;
+  }
+  
+  .cart-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .cart-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .cart-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .cart-table caption {
+    font-size: 1.5em;
+    margin: 10px 0;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  .cart-title-link {
+    text-decoration: none !important; /* 링크의 밑줄 제거 */
+    color: #000000; /* 링크 색상 설정 (선택 사항) */
+  }
+  
+ 
+  
+  .register-button {
+    padding: 10px;
+    background-color: #000000;
+    text-decoration: none;
+    color: #ffffff;
+  }
+  
