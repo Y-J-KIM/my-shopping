@@ -5,109 +5,90 @@ import Header from "../Home/Header";
 import Footer from "../Home/Footer";
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-import {
-  getCartItems,
-  updateCartItemQuantity,
-  removeCartItem,
-} from "../services/CartService";
+import { getCart, addItemToCart, updateCartItemQuantity, removeCartItem } from '../services/CartService';
 
-const CartPage = () => {
-  const [cartItems, setCartItems] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
-  const { user } = useUser(); // 로그인된 사용자 정보 가져오기
-  const navigate = useNavigate();
+const CartPage = ({ userId }) => {
+  const [cart, setCart] = useState(null);
+  const [newItem, setNewItem] = useState({ product: { id: '' }, quantity: 1 });
 
   useEffect(() => {
-    fetchCartItems();
-  }, []);
+      async function fetchCart() {
+          try {
+              const fetchedCart = await getCart(userId);
+              setCart(fetchedCart);
+          } catch (error) {
+              console.error('Error fetching cart:', error.message);
+          }
+      }
 
-  const fetchCartItems = async () => {
-    try {
-      const data = await getCartItems(user.id);
-      setCartItems(data.items);
-      calculateTotalAmount(data.items);
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-    }
+      fetchCart();
+  }, [userId]);
+
+  const handleAddItem = async () => {
+      try {
+          await addItemToCart(userId, newItem);
+          // 장바구니 새로고침
+          const updatedCart = await getCart(userId);
+          setCart(updatedCart);
+      } catch (error) {
+          console.error('Error adding item to cart:', error.message);
+      }
   };
 
-  const calculateTotalAmount = (items) => {
-    const total = items.reduce(
-      (sum, item) => sum + item.product.price * item.quantity,
-      0
-    );
-    setTotalAmount(total);
-  };
-
-  const handleUpdateQuantity = async (itemId, newQuantity) => {
-    try {
-      await updateCartItemQuantity(itemId, newQuantity);
-      fetchCartItems(); // 업데이트 후 다시 아이템 목록 불러오기
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-    }
+  const handleUpdateQuantity = async (itemId, quantity) => {
+      try {
+          await updateCartItemQuantity(userId, itemId, quantity);
+          // 장바구니 새로고침
+          const updatedCart = await getCart(userId);
+          setCart(updatedCart);
+      } catch (error) {
+          console.error('Error updating item quantity:', error.message);
+      }
   };
 
   const handleRemoveItem = async (itemId) => {
-    try {
-      await removeCartItem(itemId);
-      fetchCartItems(); // 삭제 후 다시 아이템 목록 불러오기
-    } catch (error) {
-      console.error("Error removing item:", error);
-    }
+      try {
+          await removeCartItem(userId, itemId);
+          // 장바구니 새로고침
+          const updatedCart = await getCart(userId);
+          setCart(updatedCart);
+      } catch (error) {
+          console.error('Error removing item from cart:', error.message);
+      }
   };
+
+  if (!cart) return <div>Loading...</div>;
+
 
   return (
     <div>
       <Header />
-      <div className="container">
-        <h1>Your Cart</h1>
-        <div id="cart-items">
-          {cartItems.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            cartItems.map((item) => (
-              <div className="cart-item" key={item.id}>
-                <img src={item.product.imageUrl} alt={item.product.name} />
-                <div className="cart-item-details">
-                  <h3>{item.product.name}</h3>
-                  <p>Price: ${item.product.price}</p>
-                  <div className="cart-item-actions">
-                    <input
-                      type="number"
-                      value={item.quantity}
-                      min="1"
-                      onChange={(e) =>
-                        handleUpdateQuantity(item.id, parseInt(e.target.value))
-                      }
-                    />
-                    <button
-                      onClick={() =>
-                        handleUpdateQuantity(item.id, item.quantity)
-                      }
-                    >
-                      Update
-                    </button>
-                    <button onClick={() => handleRemoveItem(item.id)}>
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
+      <div className="cart-main">
+            <h1>My Cart</h1>
+            <ul>
+                {cart.items.map(item => (
+                    <li key={item.id}>
+                        {item.product.name} - {item.quantity}
+                        <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}>Increase</button>
+                        <button onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}>Decrease</button>
+                        <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                    </li>
+                ))}
+            </ul>
+            <div>
+                <input
+                    type="number"
+                    value={newItem.quantity}
+                    onChange={e => setNewItem({ ...newItem, quantity: parseInt(e.target.value, 10) })}
+                />
+                <input
+                    type="text"
+                    value={newItem.product.id}
+                    onChange={e => setNewItem({ ...newItem, product: { id: e.target.value } })}
+                />
+                <button onClick={handleAddItem}>Add Item</button>
+            </div>
         </div>
-        <div id="cart-summary">
-          <h2>Cart Summary</h2>
-          <p id="total-amount">Total: ${totalAmount.toFixed(2)}</p>
-          <button
-            id="checkout-button"
-            onClick={() => alert("Proceeding to checkout")}
-          >
-            Proceed to Checkout
-          </button>
-        </div>
-      </div>
       <Footer />
     </div>
   );

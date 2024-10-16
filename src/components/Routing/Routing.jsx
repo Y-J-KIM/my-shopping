@@ -14,7 +14,7 @@ import ProductModal from "../Admin/ProductModal";
 import ModifyModal from "../Admin/ModifyModal";
 import MyPage from "../Member/Mypage";
 import EditUser from "../Member/EditUser";
-import Order from "../Order/UserOrder"
+import Order from "../Member/MyOrder"
 
 const Routing = () => {
   return (

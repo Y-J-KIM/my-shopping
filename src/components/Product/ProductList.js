@@ -30,7 +30,7 @@ const ProductList = () => {
   return (
     <div>
       <div className="product-list">
-        <h1>Product List</h1>
+        <h1>상품 목록</h1>
         <div className="product-cards">
           {products.length === 0 ? (
             <div>No products available</div>

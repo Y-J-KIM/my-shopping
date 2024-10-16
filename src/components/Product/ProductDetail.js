@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
 import { useUser } from "../UserContext"; // UserContext에서 훅을 가져옴
-import CartService from "../services/CartService";
+import { addItemToCart } from "../services/CartService";
 
 const ProductDetail = () => {
   const { id } = useParams(); // URL에서 id 파라미터를 가져옴
@@ -32,7 +32,7 @@ const ProductDetail = () => {
     try {
       console.log(user.id, product.id, quantity);
       //옵션으로 credentials: 'include'를 추가하여 쿠키를 포함시킵니다.
-      await CartService.addItemToCart(user.id, product.id, quantity, {
+      await addItemToCart(user.id, product.id, quantity, {
         credentials: "include", // 이 부분이 중요
       });
       alert("Item added to cart!");

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CartService from "../services/CartService";
+import { getCart } from "../services/CartService";
 import Header from "../Home/Header";
 import Footer from "../Home/Footer";
 import "./Cart.css"
@@ -10,7 +10,7 @@ const Cart = ({ userId }) => {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const data = await CartService.loadCart(userId);
+        const data = await getCart(userId);
         setCart(data);
       } catch (error) {
         console.error("Failed to load cart:", error);
@@ -23,13 +23,13 @@ const Cart = ({ userId }) => {
   return (
     <div>
       <Header/>
-        <div>
-          <h1>Your Cart</h1>
+        <div className="cart-main">
+          <h1>장바구니</h1>
             <table className="cart-table">
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>제품</th>
+                  <th>상품명</th>
                   <th>갯수</th>
                   <th>가격</th>
                   <th></th>

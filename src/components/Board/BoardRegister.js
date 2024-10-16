@@ -15,10 +15,11 @@ const BoardRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("writer Id: ", user.userId)
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
-    formData.append("writer", user.username); // writer에 user.id 설정
+    formData.append("writer", user.userId); // writer에 user.id 설정
     if (image) {
       formData.append("image", image);
     }
@@ -61,7 +62,7 @@ const BoardRegister = () => {
             <input
               type="text"
               id="writer"
-              value={user.username} // writer 필드에 user.id 설정
+              value={user.userId} // writer 필드에 user.id 설정
               readOnly
             />
           </div>
